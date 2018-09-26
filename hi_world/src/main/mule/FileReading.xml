@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+
+	<sub-flow name="ReadXML" doc:id="32bc5bf6-bfbf-42e9-b33e-6902d6c8937b" >
+		<file:read doc:name="ReadXML" doc:id="a0aba2f9-56bc-4adb-95ae-ae2d639947cb" path="C:\Users\Sergey_Chernikov\mule_files\flat.xml" />
+		<ee:transform doc:name="Transform Message" doc:id="65d2616a-9ad5-40ee-bd23-963a6685d927">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	people: payload.people
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="cb1968eb-6320-4509-a61a-e7006270b6c7" message="#[payload]" />
+	</sub-flow>
+	<sub-flow name="readCSV" doc:id="de9ac248-f106-4083-b9e4-73a1504b0dcc" >
+		<file:read doc:name="ReadCSV" doc:id="397bc289-fd4b-49ee-b518-2bb4581dffb0" path="C:\Users\Sergey_Chernikov\mule_files\flat.csv" />
+		<ee:transform doc:name="Transform CSV" doc:id="8c477436-8235-4db4-871d-4b73ead61291">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/csv headerLineNumber = 0 , header = true
+---
+payload map  {
+	id: $.id,
+	name: $.name,
+	age: $.age,
+	gender: $.gender
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="8d478393-5abf-40b9-8cef-d8735a66b9dd" message="#[payload]" />
+	</sub-flow>
+	<sub-flow name="readJSON" doc:id="75bda99a-c483-476f-8761-735755a7d97b" >
+		<file:read doc:name="Read" doc:id="ce4606a9-5288-42f5-9e0a-c7796adb8e2b" path="C:\Users\Sergey_Chernikov\mule_files\flat.json"/>
+		<ee:transform doc:name="Transform Message" doc:id="3ec24a72-62b0-40c4-9a2a-e710dc38f298" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	person: payload.person map ( person , indexOfPerson ) -> {
+		id: person.id,
+		name: person.name,
+		age: person.age,
+		genre: person.genre
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="470db767-4af8-4fb6-a829-e5391697cc15" message="#[payload]"/>
+	</sub-flow>
+</mule>

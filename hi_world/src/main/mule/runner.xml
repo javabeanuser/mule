@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="2687f5e8-12c2-43be-ab67-b681c50ab23d" >
+		<http:listener-connection host="localhost" port="8906" />
+	</http:listener-config>
+	<flow name="runnerFlow" doc:id="0612f798-184c-4e16-acdf-6b84737d55e4" >
+		<http:listener doc:id="1080f8c4-7734-4ef0-94d6-01609d741bb1" doc:name="" config-ref="HTTP_Listener_config" path="/runner"/>
+		<flow-ref doc:name="readJSON" doc:id="dbdc44f2-88d6-48c5-8930-f82b35f21a90" name="readJSON"/>
+	</flow>
+</mule>

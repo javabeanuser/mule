@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="personalCSV" format="csv">
+      <types:shape format="weave"><![CDATA[type personalCSV = Array<{|
+  id?: String, 
+  name?: String, 
+  age?: String, 
+  gender?: String
+|}> {"MetadataFormat": "csv"}]]></types:shape>
+      <types:properties>
+        <types:property name="headerLineNumber" value="0"/>
+        <types:property name="header" value="true"/>
+        <types:property name="isQuotedString" value="false"/>
+      </types:properties>
+    </types:type>
+    <types:type name="rersonalXSD" format="xml">
+      <types:example format="xml" element="people" location="examples/flat.xml"/>
+    </types:type>
+    <types:type name="personalJSON" format="json">
+      <types:example format="json" location="examples/flat.json"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#8c477436-8235-4db4-871d-4b73ead61291">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="personalCSV"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="personalCSV"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#65d2616a-9ad5-40ee-bd23-963a6685d927">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="rersonalXSD"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="rersonalXSD"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#3ec24a72-62b0-40c4-9a2a-e710dc38f298">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="personalJSON"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="personalJSON"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

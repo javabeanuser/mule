@@ -1,0 +1,22 @@
+{
+  "configs": [
+    "runner.xml",
+    "FileReading.xml",
+    "dbworking.xml"
+  ],
+  "secureProperties": [],
+  "redeploymentEnabled": true,
+  "name": "hi_world",
+  "minMuleVersion": "4.1.1",
+  "requiredProduct": "MULE_EE",
+  "classLoaderModelLoaderDescriptor": {
+    "id": "mule",
+    "attributes": {
+      "exportedResources": []
+    }
+  },
+  "bundleDescriptorLoader": {
+    "id": "mule",
+    "attributes": {}
+  }
+}
